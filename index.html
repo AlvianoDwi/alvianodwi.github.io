@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nama - Personal Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --primary: #7e57c2;
+            --primary-light: #b085f5;
+            --primary-dark: #4d2c91;
+            --secondary: #26c6da;
+            --accent: #ff7043;
+            --bg: #f5f3ff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text: #2d3748;
+            --text-light: #4a5568;
+        }
+
+        [data-theme="dark"] {
+            --primary: #9575cd;
+            --primary-light: #b39ddb;
+            --primary-dark: #673ab7;
+            --secondary: #4dd0e1;
+            --accent: #ff8a65;
+            --bg: #121212;
+            --card-bg: rgba(30, 30, 30, 0.9);
+            --text: #e2e8f0;
+            --text-light: #a0aec0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: all 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        /* Parallax Background */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.15;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(245, 243, 255, 0.8);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] header {
+            background-color: rgba(18, 18, 18, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 2rem 4rem;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .profile-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0)
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            animation: fadeIn 1s ease;
+        }
+
+        .profile-bio {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            animation: fadeIn 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Shop Section */
+        .shop-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .shop-container {
+            position: relative;
+        }
+
+        .shop-scroll {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 1rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .shop-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .shop-card {
+            flex: 0 0 250px;
+            scroll-snap-align: start;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .shop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .shop-image {
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .shop-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .shop-info {
+            padding: 1.2rem;
+        }
+
+        .shop-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .shop-price {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Scroll Navigation */
+        .scroll-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .scroll-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            opacity: 0.3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-dot.active {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: #f4511e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-teal {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-teal:hover {
+            background: #00acc1;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-purple {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .btn-purple:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 100px 1rem 2rem;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 2.5rem;
+            }
+
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-bio {
+                font-size: 1rem;
+            }
+
+            .shop-card {
+                flex: 0 0 200px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .action-btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2rem;
+            }
+
+            .profile-name {
+                font-size: 1.8rem;
+            }
+
+            .shop-card {
+                flex: 0 0 180px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-bg"></div>
+
+    <header>
+        <a href="#" class="logo">
+            <span class="logo-icon">✨</span>
+            <span>Nama</span>
+        </a>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <div class="container">
+        <section class="profile-section">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h1 class="profile-name">Nama</h1>
+            <p class="profile-bio">Bio simpel dan deskripsi tentang diri Anda. Tambahkan beberapa kata kunci yang menggambarkan siapa Anda dan apa yang Anda lakukan.</p>
+        </section>
+
+        <section class="shop-section">
+            <h2 class="section-title">
+                <i class="fas fa-store"></i>
+                SHOP
+            </h2>
+            
+            <div class="shop-container">
+                <div class="shop-scroll" id="shopScroll">
+                    <div class="shop-card">
+                        <div class="shop-image">
+                            <div class="shop-badge">-25%</div>
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="shop-info">
+                            <h3 class="shop-title">Judul Produk 1</h3>
+                            <div class="shop-price">Rp 100.000</div>
+                        </div>
+                    </div>
+                    
+                    <div class="shop-card">
+                        <div class="shop-image">
+                            <div class="shop-badge">New</div>
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="shop-info">
+                            <h3 class="shop-title">Judul Produk 2</h3>
+                            <div class="shop-price">Rp 250.000</div>
+                        </div>
+                    </div>
+                    
+                    <div class="shop-card">
+                        <div class="shop-image">
+                            <div class="shop-badge">Best</div>
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="shop-info">
+                            <h3 class="shop-title">Judul Produk 3</h3>
+                            <div class="shop-price">Rp 75.000</div>
+                        </div>
+                    </div>
+                    
+                    <div class="shop-card">
+                        <div class="shop-image">
+                            <div class="shop-badge">Hot</div>
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <div class="shop-info">
+                            <h3 class="shop-title">Judul Produk 4</h3>
+                            <div class="shop-price">Rp 150.000</div>
+                        </div>
+                    </div>
+                    
+                    <div class="shop-card">
+                        <div class="shop-image">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="shop-info">
+                            <h3 class="shop-title">Judul Produk 5</h3>
+                            <div class="shop-price">Rp 35.000</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-nav" id="scrollNav">
+                    <div class="scroll-dot active"></div>
+                    <div class="scroll-dot"></div>
+                    <div class="scroll-dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">
+                <i class="fas fa-star"></i>
+                JUDUL
+            </h2>
+            <!-- Additional content sections can go here -->
+        </section>
+
+        <div class="action-buttons" id="actionButtons">
+            <a href="#" class="action-btn btn-primary">
+                <i class="fas fa-shopping-bag"></i>
+                Visit Shop
+            </a>
+            <a href="#" class="action-btn btn-secondary">
+                <i class="fas fa-images"></i>
+                View Portfolio
+            </a>
+            <a href="#" class="action-btn btn-accent">
+                <i class="fas fa-envelope"></i>
+                Contact Me
+            </a>
+            <a href="#" class="action-btn btn-teal">
+                <i class="fas fa-file-alt"></i>
+                My Resume
+            </a>
+            <a href="#" class="action-btn btn-purple">
+                <i class="fas fa-heart"></i>
+                Support Me
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Nama. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or use preferred color scheme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            if (html.hasAttribute('data-theme')) {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+        
+        // Shop Scroll Navigation
+        const shopScroll = document.getElementById('shopScroll');
+        const scrollNav = document.getElementById('scrollNav');
+        const dots = Array.from(scrollNav.children);
+        
+        shopScroll.addEventListener('scroll', function() {
+            const scrollPos = shopScroll.scrollLeft;
+            const cardWidth = shopScroll.children[0].offsetWidth + 24; // width + gap
+            const activeDot = Math.floor(scrollPos / cardWidth);
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeDot);
+            });
+        });
+        
+        // Click on dots to scroll
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const cardWidth = shopScroll.children[0].offsetWidth + 24;
+                shopScroll.scrollTo({
+                    left: index * cardWidth,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Parallax Effect
+        window.addEventListener('mousemove', function(e) {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const parallaxBg = document.querySelector('.parallax-bg');
+            
+            parallaxBg.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+        });
+        
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.profile-name, .profile-bio, .shop-card');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const animationPoint = windowHeight / 1.2;
+                
+                if (elementPosition < animationPoint) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial styles for animation
+        document.querySelectorAll('.profile-name, .profile-bio, .shop-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Function to add more buttons dynamically
+        function addButton(icon, text, colorClass, url = "#") {
+            const actionButtons = document.getElementById('actionButtons');
+            const newButton = document.createElement('a');
+            
+            newButton.href = url;
+            newButton.className = `action-btn ${colorClass}`;
+            newButton.innerHTML = `<i class="fas fa-${icon}"></i> ${text}`;
+            
+            actionButtons.appendChild(newButton);
+        }
+
+        // Example: Add a new button (you can call this function whenever needed)
+        // addButton('github', 'My GitHub', 'btn-secondary', 'https://github.com');
+    </script>
+</body>
+</html>
