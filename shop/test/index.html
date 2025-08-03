@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akun Twitter Siap Pakai | Email + 2FA</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header>
+    <h1><a href="/">KStore</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/shop">Shop</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-detail">
+      <img src="/assets/img/twitter-x.jpg" alt="Akun Twitter Siap Pakai" class="product-img" />
+      <div class="product-info">
+        <h2>Akun Twitter Siap Pakai | Termasuk Email, 2FA, dan Token</h2>
+        <p><del>Rp 5.000</del> <strong>Rp 2.500</strong> <span class="discount">Diskon 52%</span></p>
+        <p>50 in stock</p>
+        <div class="product-actions">
+          <button onclick="addToCart()">Add to cart</button>
+          <a href="https://wa.me/6281234567890?text=Halo%20saya%20mau%20beli%20akun%20twitter" target="_blank">Buy</a>
+          <button onclick="goToCheckout()">Buy Now</button>
+        </div>
+        <hr />
+        <h3>Detail Akun:</h3>
+        <ul>
+          <li>Akun terdaftar otomatis</li>
+          <li>Dikonfirmasi via email domain <code>firstmail.ltd</code></li>
+          <li>Format login: <code>login:password</code></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function addToCart() {
+      alert("Item ditambahkan ke keranjang (simulasi).");
+    }
+
+    function goToCheckout() {
+      window.location.href = "/checkout.html?item=twitter-x";
+    }
+  </script>
+</body>
+</html>
